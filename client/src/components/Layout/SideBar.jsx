@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { server } from '../../server';
 import { MdDashboard } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import profile from '../../Assets/Profile photo.png'
 
 const SideBar = ({ setActive, isSidebarVisible }) => {
-    const { admin } = useSelector((state) => state.admin);
+    // const { admin } = useSelector((state) => state.admin);
 
     const Navigate = useNavigate()
     const logout = async () => {
@@ -101,8 +101,8 @@ const SideBar = ({ setActive, isSidebarVisible }) => {
                                     <img src={profile} alt="" className="w-[50px] h-[50px] " />
                                 </div>
                                 <div className="profileName px-1 hidden md:flex flex-col items-end text-[#666666]">
-                                    <span>{admin.email.split('@')[0]}</span>
-                                    <span className="float-right text-[10px]">{admin.role}</span>
+                                    {/* <span>{admin.email.split('@')[0]}</span>
+                                    <span className="float-right text-[10px]">{admin.role}</span> */}
                                 </div>
                                 <div className={`flex gap-2 items-center  py-4 px-2  border-[#003443] rounded-tl-2xl rounded-bl-2xl text-lg font-medium cursor-pointer `} onClick={() => logout()}>
                                     <BiLogOut className="text-[1.4rem]" />

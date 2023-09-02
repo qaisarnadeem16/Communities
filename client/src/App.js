@@ -6,22 +6,22 @@ import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminLogin from './pages/Admin/AdminLogin';
-import Store from './Redux/store'
-import { useEffect } from 'react';
-import { loadUser } from './Redux/Action/User';
+// import Store from './Redux/store'
+// import { useEffect } from 'react';
+// import { loadUser } from './Redux/Action/User';
 // import ProtectedRoute from './Routes/ProtectedRoute';
 // import AdminProtectedRoute from './Routes/AdminProtectedRoute'
-import { loadAdmin } from './Redux/Action/Admin';
+// import { loadAdmin } from './Redux/Action/Admin';
 // import DashBoard from './pages/Admin/DashBoard';
 // import { useSelector } from 'react-redux';
 
 
 
 function App() {
-  useEffect(() => {
-    Store.dispatch(loadUser())
-    Store.dispatch(loadAdmin())
-  })
+  // useEffect(() => {
+  //   Store.dispatch(loadUser())
+  //   Store.dispatch(loadAdmin())
+  // })
   // const { vendor } = useSelector((state) => state.vendor);
   // console.log(vendor)
   return (
