@@ -12,8 +12,8 @@ import { loadUser } from './Redux/Action/User';
 // import ProtectedRoute from './Routes/ProtectedRoute';
 import AdminProtectedRoute from './Routes/AdminProtectedRoute'
 import { loadAdmin } from './Redux/Action/Admin';
-import SignupUserForm from './components/SignupUserForm';
-import ReportAddForm from './components/ReportAddForm';
+// import SignupUserForm from './components/SignupUserForm';
+// import ReportAddForm from './components/ReportAddForm';
 // import DashBoard from './pages/Admin/DashBoard';
 // import { useSelector } from 'react-redux';
 
@@ -33,8 +33,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AdminLogin />} />
-          <Route path="/user" element={<SignupUserForm />} />
-          <Route path="/report" element={<ReportAddForm />} />
+          {/* <Route path="/user" element={<SignupUserForm />} /> */}
+          {/* <Route path="/report" element={<ReportAddForm />} /> */}
 
 
           <Route path="/dashboard" element={
