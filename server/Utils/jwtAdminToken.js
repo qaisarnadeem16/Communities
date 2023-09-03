@@ -8,7 +8,7 @@ const sendAdminToken = (user, statusCode, res) => {
       Secure: true,
     };
   
-    res.status(statusCode).cookie("adminToken", token, options,  { domain: 'https://communities-snowy.vercel.app' }).json({
+    res.status(statusCode).cookie("adminToken", token, options).json({
       success: true,
       user,
       token,

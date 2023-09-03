@@ -11,12 +11,17 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(
-    cors({
-      origin: "https://communities-snowy.vercel.app",
-      credentials: true,
-    })
-  );
+// app.use(
+//     cors({
+//       origin: "http://localhost:3000",
+//       credentials: true,
+//     })
+//   );
+
+app.use("*",cors({
+  origin:true,
+  credentials:true
+}))
   app.use("/", express.static("uploads"));
 app.listen(port , ()=>{
     console.log(`listening on port ${port}`)
