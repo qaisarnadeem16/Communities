@@ -5,10 +5,14 @@ import ProfileCard from '../components/Layout/ProfileCard'
 import axios from 'axios'
 import { backend_url, server } from '../server'
 import { toast } from 'react-toastify'
+import { AiFillCloseCircle } from 'react-icons/ai'
+import SuspendUser from '../components/SuspendUser'
 
 const Users = () => {
     const [users, setUsers] = useState([])
     const [user, setUser] = useState('');
+    const [editID, setEditID] = useState();
+    const [popup, setPopup] = useState(false);
 
     useEffect(() => {
         fetchUsers();
@@ -28,13 +32,19 @@ const Users = () => {
 
     const fetchUser = async (userID) => {
         try {
-          const response = await axios.get(`${server}/user/getUser/${userID}`);
-          setUser(response.data);
+            const response = await axios.get(`${server}/user/getUser/${userID}`);
+            setUser(response.data);
         } catch (error) {
-          console.error(error);
-          toast.error('Error fetching user');
+            console.error(error);
+            toast.error('Error fetching user');
         }
-      };
+    };
+
+
+    const changeStatus = (id) => {
+        setPopup(true)
+        setEditID(id);
+    }
     return (
         <DashBoard>
             <div className="w-full text-white flex gap-2 flex-wrap">
@@ -61,14 +71,22 @@ const Users = () => {
                                     <tr key={user._id} className='text-sm font-normal text-white py-3'>
                                         <td className='' onClick={() => fetchUser(user._id)}>
                                             <div className="flex gap-3 items-center">
-                                                <img src={`${backend_url}${user.profileImage}`} alt=""  className="rounded-full w-[40px] h-[40px]" />
+                                                <img src={`${backend_url}${user.profileImage}`} alt="" className="rounded-full w-[40px] h-[40px]" />
                                                 {user.username}
                                             </div>
                                         </td>
                                         <td className=''>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
                                         <td className='px-2 py-2 rounded-lg text-green-500'>{user.gender}</td>
-                                        <td className='py-2'> <div className=" py-2 w-24 rounded-lg bg-red-500 cursor-pointer">Suspend</div></td>
+                                        <td className="py-2">
+                                            <div
+                                                className={`py-2 w-24 rounded-lg ${user.accountStatus === 'active' ? 'bg-red-500' : 'bg-green-500'
+                                                    } cursor-pointer`}
+                                                onClick={() => changeStatus(user._id)}
+                                            >
+                                                {user.accountStatus === 'active' ? 'Suspend' : 'Activate'}
+                                            </div>
+                                        </td>
 
                                     </tr>
                                 ))}
@@ -96,8 +114,23 @@ const Users = () => {
 
                 {/* //users card? */}
                 <div className="md:w-[24%] w-full">
-               {user && <ProfileCard user={user} />}
+                    {user && <ProfileCard user={user} />}
                 </div>
+
+
+
+
+                {popup && (
+                    <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-50 bg-gray-500">
+                        <div className="md:w-1/4 md:h-[40vh] w-full bg-white relative">
+                            <div className="absolute top-3 right-3 hover:scale-105 text-lg text-black hover:text-red-500" onClick={() => setPopup(false)}>
+                                <AiFillCloseCircle />
+                            </div>
+                            <h1 className="text-black text-center py-5 font-semibold">Change Status</h1>
+                            <SuspendUser ID={editID} />
+                        </div>
+                    </div>
+                )}
 
             </div>
         </DashBoard>

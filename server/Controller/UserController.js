@@ -153,34 +153,19 @@ router.delete('/deleteUser/:userId', async (req, res, next) => {
 
 
 
-// router.put('/update-profilePic', upload.single('profilePic'), async (req, res, next) => {
-//   try {
-//     const { userId } = req.body;
-//     const existsUser = await User.findById(userId);
+//update user status
+router.put('/updateStatus/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateUser = req.body;
+    // Update the quiz in the database
+    const user = await User.findByIdAndUpdate(id, updateUser, { new: true });
 
-//     if (!existsUser) {
-//       return res.status(404).json({ success: false, message: 'User not found' });
-//     }
-
-//     // Check if the user has a profile picture to delete
-//     if (existsUser.profilePic) {
-//       const existAvatarPath = path.join('uploads', existsUser.profilePic);
-//       fs.unlinkSync(existAvatarPath);
-//     }
-
-//     const fileUrl = req.file.filename;
-//     existsUser.profilePic = fileUrl;
-//     await existsUser.save();
-
-//     res.status(200).json({
-//       success: true,
-//       user: existsUser,
-//     });
-//   } catch (error) {
-//     return next(new ErrorHandler(error.message, 500));
-//   }
-// });
-
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update report' });
+  }
+});
 
 
 
