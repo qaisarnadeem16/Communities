@@ -25,13 +25,15 @@ app.listen(port , ()=>{
 // call api 
 const admin= require('./Controller/AdminController')
 const user= require('./Controller/UserController')
-const vendor= require('./Controller/VendorController')
+const report= require('./Controller/ReportController')
+const community= require('./Controller/CommunityController')
 const ErrorHandler = require('./Utils/ErrorHandler');
 
 
 app.use("/api/v2/admin" , admin)
 app.use("/api/v2/user" , user)
-app.use("/api/v2/vendor" , vendor)
+app.use("/api/v2/community" , community)
+app.use("/api/v2/report" , report)
 
 // it's for ErrorHandling
 app.use(ErrorHandler);

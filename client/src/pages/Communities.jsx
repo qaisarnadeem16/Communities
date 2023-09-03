@@ -1,8 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DashBoard from './Admin/DashBoard'
 import AddCommunityForm from '../components/AddCommunityForm'
+import axios from 'axios';
+import { server } from '../server';
+import { toast } from 'react-toastify';
 
 const Communities = () => {
+    const [communities, setCommunities] = useState([]);
+
+    useEffect(() => {
+        fetchCommunities();
+    }, []);
+
+    // fetch all questions
+    const fetchCommunities = async () => {
+        try {
+            const response = await axios.get(`${server}/community/getAllCommunity`);
+            // console.log(response.data); // Check the received data in the console
+            setCommunities(response.data.users);
+        } catch (error) {
+            console.error(error);
+            toast.error('Error fetching Community');
+        }
+    };
+    // console.log(communities)
     return (
         <DashBoard>
             <div className="w-full text-white flex gap-2 flex-wrap">
@@ -26,7 +47,18 @@ const Communities = () => {
                             </thead>
                             <tbody className="text-center">
 
-                                <tr className='text-sm font-normal text-white py-3'>
+                            {communities.map((community) => (
+                                    <tr key={community._id}className='text-sm font-normal text-white py-3'>
+                                    <td className=''>
+                                    {community.name}
+                                    </td>
+                                    <td className=''>{community.city}</td>
+                                    <td>{community.state}</td>
+                                    <td className='px-2 py-2 rounded-lg text-green-500'>{community.zipCode}</td>
+
+                                </tr>
+                            ))}
+                                {/* <tr className='text-sm font-normal text-white py-3'>
                                     <td className=''>
                                     BetCoverse
                                     </td>
@@ -34,40 +66,9 @@ const Communities = () => {
                                     <td>California</td>
                                     <td className='px-2 py-2 rounded-lg text-green-500'>6007</td>
 
-                                </tr>
-
-                                <tr className='text-sm font-normal text-white py-3'>
-                                    <td className=''>
-                                    BetCoverse
-                                    </td>
-                                    <td className=''>Chicago</td>
-                                    <td>California</td>
-                                    <td className='px-2 py-2 rounded-lg text-green-500'>6007</td>
-
-                                </tr>
+                                </tr> */}
 
 
-                                <tr className='text-sm font-normal text-white py-3'>
-                                    <td className=''>
-                                    BetCoverse
-                                    </td>
-                                    <td className=''>Chicago</td>
-                                    <td>California</td>
-                                    <td className='px-2 py-2 rounded-lg text-green-500'>6007</td>
-
-                                </tr>
-
-                                {/* {currentItems.map((quiz) => (
-                                        <tr key={quiz._id}>
-                                            <td className="py-2 px-4 border text-left">{quiz.quizId.title}</td>
-                                            <td className="py-2 px-4 border">{quiz.quizId.category}</td>
-                                            <td className="py-2 px-4 border">{quiz.questions.length}</td>
-                                            <td className="py-2 px-4 border">{quiz.questions.length - quiz.totalNotAttempted}</td>
-                                            <td className="py-2 px-4 border">{quiz.totalWrongAnswers}</td>
-                                            <td className="py-2 px-4 border">{quiz.totalCorrectAnswers}</td>
-                                            <td className="py-2 px-4 border">{quiz.quizId.firstPrize}$</td>
-                                        </tr>
-                                    ))} */}
                             </tbody>
                         </table>
                     </div>

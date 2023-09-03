@@ -6,22 +6,24 @@ import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminLogin from './pages/Admin/AdminLogin';
-// import Store from './Redux/store'
-// import { useEffect } from 'react';
-// import { loadUser } from './Redux/Action/User';
+import Store from './Redux/store'
+import { useEffect } from 'react';
+import { loadUser } from './Redux/Action/User';
 // import ProtectedRoute from './Routes/ProtectedRoute';
-// import AdminProtectedRoute from './Routes/AdminProtectedRoute'
-// import { loadAdmin } from './Redux/Action/Admin';
+import AdminProtectedRoute from './Routes/AdminProtectedRoute'
+import { loadAdmin } from './Redux/Action/Admin';
+import SignupUserForm from './components/SignupUserForm';
+import ReportAddForm from './components/ReportAddForm';
 // import DashBoard from './pages/Admin/DashBoard';
 // import { useSelector } from 'react-redux';
 
 
 
 function App() {
-  // useEffect(() => {
-  //   Store.dispatch(loadUser())
-  //   Store.dispatch(loadAdmin())
-  // })
+  useEffect(() => {
+    Store.dispatch(loadUser())
+    Store.dispatch(loadAdmin())
+  })
   // const { vendor } = useSelector((state) => state.vendor);
   // console.log(vendor)
   return (
@@ -30,27 +32,28 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Reports />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/" element={<AdminLogin />} />
+          <Route path="/user" element={<SignupUserForm />} />
+          <Route path="/report" element={<ReportAddForm />} />
 
 
           <Route path="/dashboard" element={
-            // <AdminProtectedRoute>
+            <AdminProtectedRoute>
               <Reports />
-            // </AdminProtectedRoute>
+            </AdminProtectedRoute>
           } />
 
           <Route path="/dashboard/users" element={
-            // <AdminProtectedRoute>
+            <AdminProtectedRoute>
               <Users />
-            // </AdminProtectedRoute>
+            </AdminProtectedRoute>
           } />
 
           
           <Route path="/dashboard/Communities" element={
-            // <AdminProtectedRoute>
+            <AdminProtectedRoute>
               <Communities />
-            // </AdminProtectedRoute>
+            </AdminProtectedRoute>
           } />
 
 

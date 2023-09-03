@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import login from '../../Assets/Rectangle 1862.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -10,30 +10,38 @@ import { Link } from 'react-router-dom'
 
 const SignupUserForm = () => {
     // const Navigate = useNavigate()
+    const [file, setFile] = useState(null)
+    const handleFile = (e) => {
+        setFile(e.target.files[0])
+    }
     const initialValues = {
-        name: '',
+        username: '',
         email: '',
-        number: '',
-        city: '',
-        country: '',
+        phoneNumber: '',
+        address: '',
+        gender: '',
         password: '',
+        profileImage: file || ''
     };
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Required'),
+        username: Yup.string().required('Required'),
         email: Yup.string().email('Invalid email').required('Required'),
-        number: Yup.string().required('Required'),
-        city: Yup.string().required('Required'),
-        country: Yup.string().required('Required'),
+        phoneNumber: Yup.string().required('Required'),
+        address: Yup.string().required('Required'),
         password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
     });
 
 
     const handleSubmit = async (values) => {
-
+        values.profileImage = file
+        console.log(values)
         try {
             await axios.post(`${server}/user/create-user`, values, {
-                withCredentials: true
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Set the content type for file upload
+                }
             });
             toast.success('Created Account successful');
 
@@ -58,6 +66,8 @@ const SignupUserForm = () => {
                     <div className="text-lg ">Please fill in your unique  Sign up details below</div>
 
                     <div className="">
+                        <img src={file} alt="" className='rounded-full w-[50px] h-[50px] mx-auto' />
+
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
@@ -71,12 +81,12 @@ const SignupUserForm = () => {
                                     </label>
                                     <Field
                                         type="text"
-                                        id="name"
-                                        name="name"
+                                        id="username"
+                                        name="username"
                                         placeholder="Enter your Full Name"
                                         className="w-full px-3  border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
                                     />
-                                    <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />
+                                    <ErrorMessage name="username" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
                                 <div className=" md:w-[48%] w-full">
                                     <label htmlFor="email" className="block text-sm mb-3">
@@ -98,41 +108,48 @@ const SignupUserForm = () => {
                                     </label>
                                     <Field
                                         type="number"
-                                        id="number"
-                                        name="number"
+                                        id="phoneNumber"
+                                        name="phoneNumber"
                                         placeholder="Enter your Phone number"
                                         className="w-full px-3  border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
                                     />
-                                    <ErrorMessage name="number" component="div" className="text-red-500 text-xs mt-1" />
+                                    <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
 
                                 <div className=" md:w-[48%] w-full">
                                     <label htmlFor="email" className="block text-sm mb-3">
-                                        City
+                                        Address
                                     </label>
                                     <Field
                                         type="text"
-                                        id="city"
-                                        name="city"
-                                        placeholder="Enter your city"
+                                        id="address"
+                                        name="address"
+                                        placeholder="Enter your address"
                                         className="w-full px-3  border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
                                     />
-                                    <ErrorMessage name="city" component="div" className="text-red-500 text-xs mt-1" />
+                                    <ErrorMessage name="address" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
 
-                                <div className=" md:w-[48%] w-full">
-                                    <label htmlFor="email" className="block text-sm mb-3">
-                                        Country
+                                <div className="md:w-[48%] w-full">
+                                    <label htmlFor="gender" className="block text-sm mb-3">
+                                        Gender
                                     </label>
                                     <Field
-                                        type="text"
-                                        id="country"
-                                        name="country"
-                                        placeholder="Enter your country"
-                                        className="w-full px-3  border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
-                                    />
-                                    <ErrorMessage name="country" component="div" className="text-red-500 text-xs mt-1" />
+                                        as="select" // Use "as" to render a select element
+                                        id="gender"
+                                        name="gender"
+                                        className="w-full px-3 border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
+                                    >
+                                        <option value="" disabled>
+                                            Select Gender
+                                        </option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </Field>
+                                    <ErrorMessage name="gender" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
+
 
 
 
@@ -150,6 +167,26 @@ const SignupUserForm = () => {
                                     />
                                     <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
+
+
+
+
+                                <div className=" md:w-[48%] w-full">
+                                    <label htmlFor="email" className="block text-sm mb-3">
+                                        Profile
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="profileImage"
+                                        onChange={handleFile}
+                                        name="profileImage"
+                                        accept="image/*" // Specify accepted file types
+                                        className="w-full px-3 border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
+                                    />
+                                    <ErrorMessage name="profile" component="div" className="text-red-500 text-xs mt-1" />
+                                </div>
+
+
                                 <button
                                     type="submit"
                                     className="w-full mt-3 bg-[#003443] text-white py-4 px-4 rounded-md hover:bg-[#53bad6] focus:outline-none focus:ring focus:ring-blue-200"

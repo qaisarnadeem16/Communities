@@ -8,27 +8,29 @@ const { isAuthenticated } = require('../Middleware/auth');
 // const bcrypt = require('bcrypt');
 // const fs = require('fs');
 // const path = require('path');
-
+const { upload } = require('../multer');
 
 
 
 // API for creating users
-router.post('/create-user', async (req, res, next) => {
+router.post('/create-user', upload.single('profileImage'), async (req, res, next) => {
   try {
-    const { name, email, number, city, country, password } = req.body;
+    const { username, email, phoneNumber, address, password, gender } = req.body;
 
     const userEmail = await User.findOne({ email });
     if (userEmail) {
       return res.status(400).json({ message: 'User already exists' });
     }
+    const fileUrl = req.file.filename;
 
     const user = new User({
-      name,
+      username,
       email,
-      number,
-      city,
-      country,
+      phoneNumber,
+      address,
+      gender,
       password,
+      profileImage:fileUrl
     });
 
     await user.save();

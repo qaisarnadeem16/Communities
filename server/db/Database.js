@@ -7,9 +7,7 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
       // Set the write concern to 'majority'
       // This ensures that write operations require acknowledgment from the majority of replica set members.
-      writeConcern: {
-        w: 'majority',
-      },
+    
     })
     .then((data) => {
       console.log(`MongoDB connected with server: ${data.connection.host}`);
