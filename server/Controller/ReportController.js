@@ -17,9 +17,22 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
     try {
       const { reportTitle, user, reportDiscription ,community} = req.body;
       
-      const image1Url = req.files['image1'][0].filename;
-      const image2Url = req.files['image2'][0].filename;
-      const image3Url = req.files['image3'][0].filename;
+      let image1Url = '';
+      let image2Url = '';
+      let image3Url = '';
+  
+      // Check if corresponding files exist in req.files and set the URLs if available
+      if (req.files['image1'] && req.files['image1'][0]) {
+        image1Url = req.files['image1'][0].filename;
+      }
+  
+      if (req.files['image2'] && req.files['image2'][0]) {
+        image2Url = req.files['image2'][0].filename;
+      }
+  
+      if (req.files['image3'] && req.files['image3'][0]) {
+        image3Url = req.files['image3'][0].filename;
+      }
 
       const report = new Report({
         reportTitle,
