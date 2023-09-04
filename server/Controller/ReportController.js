@@ -92,6 +92,35 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
   });
 
 
+  router.post('/add-feedback/:reportId', async (req, res, next) => {
+    try {
+      const reportId = req.params.reportId;
+      const { userId, feedback } = req.body;
+  
+      // Find the report by its ID
+      const report = await Report.findById(reportId);
+  
+      if (!report) {
+        return res.status(404).json({ message: 'Report not found' });
+      }
+  
+      // Create a new feedback object
+      const newFeedback = {
+        userId,
+        feedback,
+      };
+  
+      // Add the feedback to the report's feedback array
+      report.feedback.push(newFeedback);
+  
+      // Save the updated report
+      await report.save();
+  
+      res.status(201).json({ message: 'Feedback added successfully', feedback: newFeedback });
+    } catch (error) {
+      return next(error);
+    }
+  });
 
   
 module.exports = router;

@@ -15,7 +15,7 @@ const { upload } = require('../multer');
 // API for creating users
 router.post('/create-user', upload.single('profileImage'), async (req, res, next) => {
   try {
-    const { username, email, phoneNumber, address, password, gender } = req.body;
+    const { username, email, phoneNumber, address, password, gender ,communities} = req.body;
 
     const userEmail = await User.findOne({ email });
     if (userEmail) {
@@ -33,6 +33,7 @@ router.post('/create-user', upload.single('profileImage'), async (req, res, next
       address,
       gender,
       password,
+      communities,
       profileImage:fileUrl
     });
 
