@@ -21,8 +21,11 @@ router.post('/create-user', upload.single('profileImage'), async (req, res, next
     if (userEmail) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    const fileUrl = req.file.filename;
+    let fileUrl = ''; // Initialize an empty string for the profile image URL
 
+    if (req.file) {
+      fileUrl = req.file.filename;
+    }
     const user = new User({
       username,
       email,
