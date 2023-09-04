@@ -9,7 +9,7 @@ const createAndSetAdminToken = (user, statusCode, res) => {
     // Indicates that the cookie should only be sent over HTTPS.
     secure: true,
     // The domain that the cookie is valid for.
-    domain: "https://communities-snowy.vercel.app",
+    // domain: "https://communities-snowy.vercel.app",
   };
 
   res.status(statusCode).cookie("adminToken", token, options).json({
