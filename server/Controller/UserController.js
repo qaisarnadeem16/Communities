@@ -67,8 +67,8 @@ router.post('/login-user', async (req, res, next) => {
       return res.status(400).json({ message: 'Please provide Correct Password' });
 
     }
-
-    sendToken(user, 201, res);
+    res.status(200).json({ user });
+    // sendToken(user, 201, res);
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
   }
