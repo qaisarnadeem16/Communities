@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BsPatchCheckFill } from 'react-icons/bs'
 import {FaBoxes} from 'react-icons/fa'
 import { MdPendingActions } from 'react-icons/md'
-import { MdCancel } from 'react-icons/md'
+import { AiFillSetting } from 'react-icons/ai'
 import { server } from '../../server'
 import { toast } from 'react-toastify'
 const Stats = () => {
@@ -64,7 +64,7 @@ const Stats = () => {
                  
 
                     <div className="flex gap-3 items-center">
-                        <div className="bg-[#E32828] rounded-full p-5"><MdCancel/></div>
+                        <div className="bg-[#E32828] rounded-full p-5"><AiFillSetting className='text-xl'/></div>
                         <div className="flex flex-col items-center ">
                             <p className="text-[#E32828]">{underReviewReports.length}</p>
                             <p className="text-gray-400 text-[10px] leading-[13px]">Under  <br /> Reviews</p>

@@ -62,7 +62,7 @@ const Users = () => {
                                     <th className="py-2 px-2 text-md font-medium ">Name</th>
                                     <th className="py-2 px-2 text-md font-medium  ">Email </th>
                                     <th className="py-2 px-2 text-md font-medium ">Phone Number</th>
-                                    <th className="py-2 px-2 text-md font-medium ">Gender</th>
+                                    {/* <th className="py-2 px-2 text-md font-medium ">Gender</th> */}
                                     <th className="py-2 px-5 text-md font-medium "></th>
                                 </tr>
                             </thead>
@@ -77,7 +77,7 @@ const Users = () => {
                                         </td>
                                         <td className=''>{user.email}</td>
                                         <td>{user.phoneNumber}</td>
-                                        <td className='px-2 py-2 rounded-lg text-green-500'>{user.gender}</td>
+                                        {/* <td className='px-2 py-2 rounded-lg text-green-500'>{user.gender}</td> */}
                                         <td className="py-2">
                                             <div
                                                 className={`py-2 w-24 rounded-lg ${user.accountStatus === 'active' ? 'bg-red-500' : 'bg-green-500'
