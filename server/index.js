@@ -5,11 +5,13 @@ const cookieParser = require('cookie-parser');
 const app = express()
 const port = process.env.PORT || 8000;
 const cors = require("cors");
+const cookiesMiddleware = require('universal-cookie-express');
 
 // connect to database
 connectDB();
+app.use(cookiesMiddleware())
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(
   cors({
