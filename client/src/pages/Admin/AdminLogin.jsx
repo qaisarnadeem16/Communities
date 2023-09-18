@@ -17,7 +17,7 @@ const AdminLogin = () => {
           Navigate('/dashboard');
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+      }, [Navigate]);
     const initialValues = {
         email: '',
         password: '',
