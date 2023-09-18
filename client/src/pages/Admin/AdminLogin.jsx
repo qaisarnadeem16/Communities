@@ -6,11 +6,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import { server } from '../../server'
 import { useNavigate } from 'react-router-dom'
-import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux'
 const AdminLogin = () => {
-    const dispatch = useDispatch
-    const [cookies, setCookie] = useCookies(['adminToken']);
     const Navigate = useNavigate()
     const initialValues = {
         email: '',
@@ -21,23 +17,29 @@ const AdminLogin = () => {
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
     });
+ // Assuming you're using Gatsby
 
     const handleSubmit = async (values) => {
-        try {
-            const { data } = await axios.post(`${server}/admin/login-admin`, values);
-            const token = data?.token ?? ''
-            localStorage.setItem("token", token)
-            Navigate('/dashboard')
-            toast.success('Login successful');
-
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                toast.error('Token expired. Please log in again.')
-            } else {
-                toast.error('Login failed. Please try again.')
-            }
+      try {
+        const { data } = await axios.post(`${server}/admin/login-admin`, values);
+        const token = data?.token;
+        
+        if (token) {
+          localStorage.setItem("token", token);
+          Navigate('/dashboard');
+          toast.success('Login successful');
+        } else {
+          toast.error('Login failed. Please try again.');
         }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          toast.error('Token expired. Please log in again.');
+        } else {
+          toast.error('Login failed. Please try again.');
+        }
+      }
     };
+    
     return (
         <>
             <div className="flex justify-center items-center">

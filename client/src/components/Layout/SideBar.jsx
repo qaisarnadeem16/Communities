@@ -19,10 +19,11 @@ const SideBar = ({ setActive, isSidebarVisible }) => {
     const Navigate = useNavigate()
     const logout = async () => {
         try {
-            await axios.get(`${server}/admin/logout`, {
-                withCredentials: true
-            })
-            removeCookie('adminToken')
+            // await axios.get(`${server}/admin/logout`, {
+            //     withCredentials: true
+            // })
+            // removeCookie('adminToken')
+            localStorage.removeItem("token");
             toast.success('Logout Successfully');
             Navigate('/');
         } catch (error) {
