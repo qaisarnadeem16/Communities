@@ -39,7 +39,7 @@ const Users = () => {
             toast.error('Error fetching user');
         }
     };
-
+   console.log(user);
 
     const changeStatus = (id) => {
         setPopup(true)
