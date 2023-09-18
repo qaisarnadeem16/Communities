@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://communities-snowy.vercel.app",
+    origin: ["https://communities-snowy.vercel.app", "http://localhost:3000"],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })

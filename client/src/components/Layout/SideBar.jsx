@@ -10,8 +10,10 @@ import { server } from '../../server';
 import { MdDashboard } from 'react-icons/md';
 // import { useSelector } from 'react-redux';
 import profile from '../../Assets/Profile photo.png'
+import { useCookies } from 'react-cookie';
 
 const SideBar = ({ setActive, isSidebarVisible }) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['adminToken']);
     // const { admin } = useSelector((state) => state.admin);
 
     const Navigate = useNavigate()
@@ -20,8 +22,9 @@ const SideBar = ({ setActive, isSidebarVisible }) => {
             await axios.get(`${server}/admin/logout`, {
                 withCredentials: true
             })
+            removeCookie('adminToken')
             toast.success('Logout Successfully');
-            Navigate('/admin');
+            Navigate('/');
         } catch (error) {
             toast.error(error.message);
         }

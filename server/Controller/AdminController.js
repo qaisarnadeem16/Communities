@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../Model/AdminModel');
 const ErrorHandler = require('../Utils/ErrorHandler');
 const router = express.Router();
-const {  isAdminAuthenticated } = require('../Middleware/auth');
+const { isAdminAuthenticated } = require('../Middleware/auth');
 const { upload } = require('../multer');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
@@ -16,7 +16,7 @@ const sendAdminToken = require('../Utils/jwtAdminToken');
 router.post('/create-admin', async (req, res, next) => {
   try {
     const { email, password } = req.body; // Extract email and password from req.body
-   
+
     const user = new User({
       email,
       password
@@ -48,7 +48,7 @@ router.post('/login-admin', async (req, res, next) => {
       return next(new ErrorHandler("Please provide the correct information", 400));
     }
 
-     sendAdminToken(user, 201, res);
+    return sendAdminToken(user, 201, res);
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
   }
@@ -69,7 +69,7 @@ router.get("/getAdmin", isAdminAuthenticated, async (req, res, next) => {
       success: true,
       admin,
     });
-// console.log(user)
+    // console.log(user)
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
   }
@@ -167,15 +167,15 @@ router.get("/getAdmin", isAdminAuthenticated, async (req, res, next) => {
 
 
 // logout  
-router.get('/logout'  , async(req, res, next)=>{
+router.get('/logout', async (req, res, next) => {
   try {
     res.clearCookie('adminToken');
 
     res.status(201).json({
       success: true,
-      message:" log out successfully"
+      message: " log out successfully"
     })
-    
+
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
   }

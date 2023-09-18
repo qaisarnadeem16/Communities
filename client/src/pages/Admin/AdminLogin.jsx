@@ -4,11 +4,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios'
 import { toast } from 'react-toastify';
-import {server} from '../../server'
-import {useNavigate} from 'react-router-dom'
+import { server } from '../../server'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie';
 
 const AdminLogin = () => {
-    const Navigate =useNavigate()
+    const [cookies, setCookie] = useCookies(['adminToken']);
+    const Navigate = useNavigate()
     const initialValues = {
         email: '',
         password: '',
@@ -19,21 +21,25 @@ const AdminLogin = () => {
         password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
     });
 
-    const handleSubmit = async(values) => {
+    const handleSubmit = async (values) => {
         try {
-              await axios.post(`${server}/admin/login-admin`, values ,{
+            const { data } = await axios.post(`${server}/admin/login-admin`, values, {
                 withCredentials: true
-             });
-             Navigate('/dashboard')
-             toast.success('Login successful');
+            });
+            const token = data?.token ?? ''
+            if (token) {
+                setCookie('adminToken', token)
+            }
+            Navigate('/dashboard')
+            toast.success('Login successful');
 
-          }catch (error) {
+        } catch (error) {
             if (error.response && error.response.status === 401) {
                 toast.error('Token expired. Please log in again.')
-              } else {
+            } else {
                 toast.error('Login failed. Please try again.')
-              }
-          }
+            }
+        }
     };
     return (
         <>
@@ -77,7 +83,7 @@ const AdminLogin = () => {
                                         type="password"
                                         id="password"
                                         name="password"
-                                        placeholder="Enter your password"                                        
+                                        placeholder="Enter your password"
                                         className="w-full px-3  border bg-[#F5F4FF] py-3 focus:outline-none focus:border-blue-500"
                                     />
                                     <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />

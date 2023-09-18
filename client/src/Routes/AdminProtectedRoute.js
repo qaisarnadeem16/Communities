@@ -7,7 +7,7 @@ const AdminProtectedRoute = ({ children }) => {
   const { loading, isAuthenticated } = useSelector((state) => state.admin);
   if (loading === false) {
     if (!isAuthenticated) {
-      return <Navigate to="/admin" replace />;
+      return <Navigate to="/" replace />;
     }
     return children;
   }

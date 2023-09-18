@@ -12,7 +12,7 @@ const createAndSetAdminToken = (user, statusCode, res) => {
     // domain: "https://communities-snowy.vercel.app",
   };
 
-  res.status(statusCode).cookie("adminToken", token, options).json({
+  return res.status(statusCode).cookie("adminToken", token, options).json({
     success: true,
     user,
     token,
