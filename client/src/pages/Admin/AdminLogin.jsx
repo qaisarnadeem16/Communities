@@ -17,7 +17,7 @@ const AdminLogin = () => {
           Navigate('/dashboard');
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [Navigate]);
+      }, []);
     const initialValues = {
         email: '',
         password: '',
@@ -39,6 +39,7 @@ const AdminLogin = () => {
           localStorage.setItem("token", token);
           Navigate('/dashboard');
           toast.success('Login successful');
+          window.location.reload();
         } else {
           toast.error('Login failed. Please try again.');
         }
