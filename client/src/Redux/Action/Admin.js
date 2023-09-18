@@ -2,12 +2,17 @@ import axios from "axios"
 import { server } from "../../server"
 
 
-export const loadAdmin = () => async (dispatch) => {
+export const loadAdmin = () => async (dispatch, state) => {
+    const token = localStorage.getItem("token")
     try {
         dispatch({
             type: "LoadAdminRequest",
         })
-        const { data } = await axios.get(`${server}/admin/getAdmin`, { withCredentials: true })
+        const { data } = await axios.get(`${server}/admin/getAdmin`, {
+            headers: {
+                Authorization: token
+            }
+        })
         dispatch({
             type: "LoadAdminSuccess",
             payload: data.admin

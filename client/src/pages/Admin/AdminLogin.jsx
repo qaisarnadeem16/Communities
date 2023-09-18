@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 import { server } from '../../server'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie';
-
+import { useDispatch } from 'react-redux'
 const AdminLogin = () => {
+    const dispatch = useDispatch
     const [cookies, setCookie] = useCookies(['adminToken']);
     const Navigate = useNavigate()
     const initialValues = {
@@ -23,13 +24,9 @@ const AdminLogin = () => {
 
     const handleSubmit = async (values) => {
         try {
-            const { data } = await axios.post(`${server}/admin/login-admin`, values, {
-                withCredentials: true
-            });
+            const { data } = await axios.post(`${server}/admin/login-admin`, values);
             const token = data?.token ?? ''
-            if (token) {
-                setCookie('adminToken', token)
-            }
+            localStorage.setItem("token", token)
             Navigate('/dashboard')
             toast.success('Login successful');
 

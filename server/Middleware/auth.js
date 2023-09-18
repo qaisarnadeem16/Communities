@@ -23,7 +23,8 @@ exports.isAuthenticated = async (req, res, next) => {
 };
 
 exports.isAdminAuthenticated = async (req, res, next) => {
-  const adminToken = req.universalCookies.get('adminToken')
+  const adminToken = req?.headers?.authorization
+
   try {
     if (!adminToken) {
       throw new ErrorHandler("Please admin login to continue", 401);
