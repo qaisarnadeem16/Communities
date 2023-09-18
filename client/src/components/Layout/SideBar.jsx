@@ -5,15 +5,15 @@ import { BiLogOut } from 'react-icons/bi';
 import { FaUserCircle } from 'react-icons/fa';
 import { HiUserGroup } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import { server } from '../../server';
+// import axios from 'axios';
+// import { server } from '../../server';
 import { MdDashboard } from 'react-icons/md';
 // import { useSelector } from 'react-redux';
 import profile from '../../Assets/Profile photo.png'
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 
 const SideBar = ({ setActive, isSidebarVisible }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['adminToken']);
+    // const [cookies, setCookie, removeCookie] = useCookies(['adminToken']);
     // const { admin } = useSelector((state) => state.admin);
 
     const Navigate = useNavigate()

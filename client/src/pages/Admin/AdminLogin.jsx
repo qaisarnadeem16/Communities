@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import login from '../../Assets/Rectangle 1862.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -8,10 +8,21 @@ import { server } from '../../server'
 import { useNavigate } from 'react-router-dom'
 const AdminLogin = () => {
     const Navigate = useNavigate()
+
+    useEffect(() => {
+        // Check if a token exists in localStorage
+        const token = localStorage.getItem('token');
+    
+        if (token) {
+          Navigate('/dashboard');
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
     const initialValues = {
         email: '',
         password: '',
     };
+
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Required'),
