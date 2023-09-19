@@ -98,6 +98,7 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
       const { userId, feedback } = req.body;
   
       // Find the report by its ID
+      
       const report = await Report.findById(reportId);
   
       if (!report) {

@@ -172,6 +172,24 @@ router.put('/updateStatus/:id', async (req, res) => {
 });
 
 
+// get user communities
+router.get('/getUserCommunity/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params; // Use req.params to get the userId from the URL
+
+    const user = await User.findById(userId).populate('communities');
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const communities = user.communities;
+
+    res.status(200).json({ success: true, communities });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
 
 
 // logout  
