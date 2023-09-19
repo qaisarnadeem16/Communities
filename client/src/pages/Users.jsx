@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DashBoard from './Admin/DashBoard'
 import ProfileCard from '../components/Layout/ProfileCard'
-// import profile from '../Assets/Profile photo.png'
+import profile from '../Assets/download (1).png'
 import axios from 'axios'
 import { backend_url, server } from '../server'
 import { toast } from 'react-toastify'
@@ -13,7 +13,6 @@ const Users = () => {
     const [user, setUser] = useState('');
     const [editID, setEditID] = useState();
     const [popup, setPopup] = useState(false);
-
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -39,7 +38,7 @@ const Users = () => {
             toast.error('Error fetching user');
         }
     };
-   console.log(user);
+    console.log(user);
 
     const changeStatus = (id) => {
         setPopup(true)
@@ -71,7 +70,12 @@ const Users = () => {
                                     <tr key={user._id} className='text-sm font-normal text-white py-3'>
                                         <td className='' onClick={() => fetchUser(user._id)}>
                                             <div className="flex gap-3 items-center">
-                                                <img src={`${backend_url}${user.profileImage}`} alt="" className="rounded-full w-[40px] h-[40px]" />
+                                                <img
+                                                    src={user.profileImage ? `${backend_url}${user.profileImage}` : profile}
+                                                    alt="profile"
+                                                    className="rounded-full w-[40px] h-[40px]"
+                                                />
+
                                                 {user.username}
                                             </div>
                                         </td>
