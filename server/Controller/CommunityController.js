@@ -13,10 +13,10 @@ router.post('/create-community', upload.single('communityImage'), async (req, re
     const { name, city, state, zipCode } = req.body;
 
 
-    const existVendor = await Community.findOne({ name });
-    if (existVendor) {
-      return res.status(400).json({ message: 'Community already exists' });
-    }
+    // const existVendor = await Community.findOne({ name });
+    // if (existVendor) {
+    //   return res.status(400).json({ message: 'Community already exists' });
+    // }
 
 
     let fileUrl = ''; // Initialize an empty string for the profile image URL
@@ -54,6 +54,28 @@ router.get('/getAllCommunity', async (req, res, next) => {
   } catch (error) {
     return next(new ErrorHandler(error.message, 500));
 
+  }
+});
+
+
+// Delete a community by ID
+router.delete('/deleteCommunity/:communityId', async (req, res, next) => {
+  try {
+    const { communityId } = req.params;
+
+    // Find the community by its ID and remove it
+    const deletedCommunity = await Community.findByIdAndRemove(communityId);
+
+    if (!deletedCommunity) {
+      // If the community with the specified ID was not found, return a 404 Not Found response
+      return res.status(404).json({ success: false, message: 'Community not found' });
+    }
+
+    // Respond with a success message
+    res.status(200).json({ success: true, message: 'Community deleted successfully' });
+  } catch (error) {
+    // Handle any errors and pass them to the error handler middleware
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 

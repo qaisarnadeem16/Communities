@@ -4,12 +4,14 @@ import AddCommunityForm from '../components/AddCommunityForm'
 import axios from 'axios';
 import { server } from '../server';
 import { toast } from 'react-toastify';
+import { MdDelete } from 'react-icons/md';
 
 const Communities = () => {
     const [communities, setCommunities] = useState([]);
 
     useEffect(() => {
         fetchCommunities();
+        // onDelete()
     }, []);
 
     // fetch all questions
@@ -23,6 +25,19 @@ const Communities = () => {
             toast.error('Error fetching Community');
         }
     };
+
+    const onDelete = (id) => {
+        try {
+            // Send a DELETE request to delete the community by its ID
+            axios.delete(`${server}/community/deleteCommunity/${id}`);
+
+            // Show a success message
+            toast.success('Community deleted successfully');
+        } catch (error) {
+            console.error(error);
+            toast.error('Error deleting Community');
+        }
+    }
     // console.log(communities)
     return (
         <DashBoard>
@@ -30,7 +45,7 @@ const Communities = () => {
                 <div className="md:w-[70%] w-full">
                     <div className="px-5 text-xl font-semibold pb-10">Communities</div>
 
-                  
+
 
 
                     {/* //table */}
@@ -42,22 +57,29 @@ const Communities = () => {
                                     <th className="py-2 px-2 text-md font-medium  ">City </th>
                                     <th className="py-2 px-2 text-md font-medium "> State</th>
                                     <th className="py-2 px-2 text-md font-medium ">Zip Code</th>
-                                    {/* <th className="py-2 px-5 text-md font-medium "></th> */}
+                                    <th className="py-2 px-5 text-md font-medium "></th>
                                 </tr>
                             </thead>
                             <tbody className="text-center">
 
-                            {communities.map((community) => (
-                                    <tr key={community._id}className='text-sm font-normal text-white py-3'>
-                                    <td className=''>
-                                    {community.name}
-                                    </td>
-                                    <td className=''>{community.city}</td>
-                                    <td>{community.state}</td>
-                                    <td className='px-2 py-2 rounded-lg text-green-500'>{community.zipCode}</td>
-
-                                </tr>
-                            ))}
+                                {communities.map((community) => (
+                                    <tr key={community._id} className='text-sm font-normal text-white py-3'>
+                                        <td className=''>
+                                            {community.name}
+                                        </td>
+                                        <td className=''>{community.city}</td>
+                                        <td>{community.state}</td>
+                                        <td className='px-2 py-2 rounded-lg text-green-500'>{community.zipCode}</td>
+                                        <td>
+                                            <button
+                                                onClick={() => onDelete(community._id)} // Pass the community ID to the onDelete handler
+                                                className='text-red-500 text-xl  hover:text-red-700'
+                                            >
+                                                <MdDelete />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                                 {/* <tr className='text-sm font-normal text-white py-3'>
                                     <td className=''>
                                     BetCoverse
@@ -77,7 +99,7 @@ const Communities = () => {
 
                 {/* //users card? */}
                 <div className="md:w-[28%] w-full">
-                    <AddCommunityForm/>
+                    <AddCommunityForm />
                 </div>
 
             </div>

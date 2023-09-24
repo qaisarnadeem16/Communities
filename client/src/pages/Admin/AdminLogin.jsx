@@ -9,15 +9,15 @@ import { useNavigate } from 'react-router-dom'
 const AdminLogin = () => {
     const Navigate = useNavigate()
 
-    useEffect(() => {
-        // Check if a token exists in localStorage
-        const token = localStorage.getItem('token');
+    // useEffect(() => {
+    //     // Check if a token exists in localStorage
+    //     const token = localStorage.getItem('token');
     
-        if (token) {
-          Navigate('/dashboard');
-        }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+    //     if (token) {
+    //       Navigate('/dashboard');
+    //     }
+    //   // eslint-disable-next-line react-hooks/exhaustive-deps
+    //   }, []);
     const initialValues = {
         email: '',
         password: '',
