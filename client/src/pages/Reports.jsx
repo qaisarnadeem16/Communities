@@ -7,6 +7,7 @@ import { server } from '../server'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import ChangeStatus from '../components/ChangeStatus'
+import { MdDelete } from 'react-icons/md'
 
 const Reports = () => {
     const [reports, setReports] = useState([])
@@ -43,6 +44,19 @@ const Reports = () => {
     const changeStatus = (id) => {
         setPopup(true)
         setEditID(id);
+    }
+
+    const onDelete = (id) => {
+        try {
+            // Send a DELETE request to delete the community by its ID
+            axios.delete(`${server}/report/deleteReport/${id}`);
+
+            // Show a success message
+            toast.success('Report deleted successfully');
+        } catch (error) {
+            console.error(error);
+            toast.error('Error deleting Report');
+        }
     }
 
     // Filter reports based on the selected status
@@ -97,7 +111,14 @@ const Reports = () => {
                                         </td>
 
                                         <td className='py-2'> <div className=" py-2 w-32 rounded-lg bg-blue-500 hover:scale-105 cursor-pointer" onClick={() => changeStatus(report._id)}>Change Status</div></td>
-
+                                        <td>
+                                            <button
+                                                onClick={() => onDelete(report._id)} // Pass the community ID to the onDelete handler
+                                                className='text-red-500 text-xl  hover:text-red-700'
+                                            >
+                                                <MdDelete />
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
 

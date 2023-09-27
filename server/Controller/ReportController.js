@@ -49,6 +49,7 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
   
       res.status(201).json({ message: 'Report created successfully', report });
     } catch (error) {
+      console.log(error)
       return next(new ErrorHandler(error.message, 500));
     }
   });
@@ -121,6 +122,28 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
       return next(error);
     }
   });
+
+// Delete a community by ID
+router.delete('/deleteReport/:reportId', async (req, res, next) => {
+  try {
+    const { reportId } = req.params;
+
+    // Find the community by its ID and remove it
+    const deletedCommunity = await Report.findByIdAndRemove(reportId);
+
+    if (!deletedCommunity) {
+      // If the community with the specified ID was not found, return a 404 Not Found response
+      return res.status(404).json({ success: false, message: 'Report not found' });
+    }
+
+    // Respond with a success message
+    res.status(200).json({ success: true, message: 'Report deleted successfully' });
+  } catch (error) {
+    // Handle any errors and pass them to the error handler middleware
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
 
   
 module.exports = router;
