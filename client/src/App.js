@@ -13,7 +13,7 @@ import AdminLogin from './pages/Admin/AdminLogin';
 import { useEffect } from 'react';
 import { loadAdmin } from './Redux/Action/Admin';
 import SignupUserForm from './components/SignupUserForm';
-// import ReportAddForm from './components/ReportAddForm';
+import ReportAddForm from './components/ReportAddForm';
 // import DashBoard from './pages/Admin/DashBoard';
 
 
@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<AdminLogin />} />
             <Route path="/user" element={<SignupUserForm />} />
-            {/* <Route path="/report" element={<ReportAddForm />} /> */}
+            <Route path="/report" element={<ReportAddForm />} />
 
 
             <Route path="/dashboard" element={

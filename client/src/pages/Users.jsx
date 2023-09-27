@@ -7,6 +7,7 @@ import { backend_url, server } from '../server'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import SuspendUser from '../components/SuspendUser'
+import { MdDelete } from 'react-icons/md'
 
 const Users = () => {
     const [users, setUsers] = useState([])
@@ -44,6 +45,19 @@ const Users = () => {
         setPopup(true)
         setEditID(id);
     }
+
+    const onDelete = (id) => {
+        try {
+            // Send a DELETE request to delete the community by its ID
+            axios.delete(`${server}/user/deleteUser/${id}`);
+
+            // Show a success message
+            toast.success('User deleted successfully');
+        } catch (error) {
+            console.error(error);
+            toast.error('Error deleting Community');
+        }
+    }
     return (
         <DashBoard>
             <div className="w-full text-white flex gap-2 flex-wrap">
@@ -63,6 +77,8 @@ const Users = () => {
                                     <th className="py-2 px-2 text-md font-medium ">Phone Number</th>
                                     {/* <th className="py-2 px-2 text-md font-medium ">Gender</th> */}
                                     <th className="py-2 px-5 text-md font-medium "></th>
+                                    <th className="py-2 px-5 text-md font-medium "></th>
+
                                 </tr>
                             </thead>
                             <tbody className="text-center">
@@ -90,6 +106,14 @@ const Users = () => {
                                             >
                                                 {user.accountStatus === 'active' ? 'Suspend' : 'Activate'}
                                             </div>
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => onDelete(user._id)} // Pass the community ID to the onDelete handler
+                                                className='text-red-500 text-xl  hover:text-red-700'
+                                            >
+                                                <MdDelete />
+                                            </button>
                                         </td>
 
                                     </tr>

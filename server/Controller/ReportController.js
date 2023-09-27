@@ -104,7 +104,6 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
       if (!report) {
         return res.status(404).json({ message: 'Report not found' });
       }
-  
       // Create a new feedback object
       const newFeedback = {
         userId,
