@@ -93,9 +93,9 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
   });
 
 
-  router.post('/add-feedback/:reportId', async (req, res, next) => {
+  router.post('/addFeedback/:reportId', async (req, res, next) => {
     try {
-      const reportId = req.params.reportId.trim();
+      const { reportId } = req.params;
       const { userId, feedback } = req.body;
   
       // Find the report by its ID
