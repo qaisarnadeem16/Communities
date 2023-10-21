@@ -49,11 +49,8 @@ const ReportAddForm = () => {
       });
       toast.success('Created Report successfully');
     } catch (error) {
-      if (error.response) {
         toast.error(error.response.data.message); // Display server error message
-      } else {
-        toast.error('An error occurred. Please try again later.');
-      }
+      
     }
   };
 

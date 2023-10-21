@@ -53,6 +53,7 @@ const Reports = () => {
 
             // Show a success message
             toast.success('Report deleted successfully');
+            fetchReports()
         } catch (error) {
             console.error(error);
             toast.error('Error deleting Report');
