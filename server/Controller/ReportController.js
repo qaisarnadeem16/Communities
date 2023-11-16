@@ -20,7 +20,7 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
       let image1Url = '';
       let image2Url = '';
       let image3Url = '';
-  
+  // console.log(req.files)
       // Check if corresponding files exist in req.files and set the URLs if available
       if (req.files['image1'] && req.files['image1'][0]) {
         image1Url = req.files['image1'][0].filename;
@@ -46,8 +46,8 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
   
       // Save the report data to the database
       await report.save();
-  
-      res.status(201).json({ message: 'Report created successfully', report });
+   
+      res.status(200).json({ message: 'Report created successfully', report });
     } catch (error) {
       console.log(error)
       return next(new ErrorHandler(error.message, 500));

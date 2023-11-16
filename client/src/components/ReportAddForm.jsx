@@ -5,8 +5,11 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { server } from '../server';
+import { useNavigate } from 'react-router-dom'
+
 
 const ReportAddForm = () => {
+  const Navigate = useNavigate()
     const [images, setImages] = useState({ image1: null, image2: null, image3: null });
 
     const handleFile1 = (e) => {
@@ -48,6 +51,7 @@ const ReportAddForm = () => {
         },
       });
       toast.success('Created Report successfully');
+      Navigate('/dashboard');
     } catch (error) {
         toast.error(error.response.data.message); // Display server error message
       
