@@ -4,6 +4,8 @@ import axios from 'axios';
 import { server } from '../server';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../config/firebaseConfig';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('name is required'),
@@ -15,41 +17,63 @@ const validationSchema = Yup.object().shape({
 
 const AddCommunityForm = () => {
   const [file, setFile] = useState(null)
-  const handleFile = (e) => {
-    setFile(e.target.files[0])
+  const [loading, setLoading] = useState(false)
+
+  const handleFile = async (e) => {
+
+    const file = e.target.files[0];
+    console.log('Selected file:', file);
+    if (file) {
+      try {
+        setLoading(true);
+        const storageRef = ref(storage, `userPrfile/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        toast.success(' Iamge successfully uploaded')
+        setFile(downloadURL);
+      } catch (error) {
+        console.error('Error uploading file:', error.message);
+        toast.error('Error uploading file: ' + error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
   }
+
   const formik = useFormik({
     initialValues: {
       name: "",
       city: "",
       state: "",
       zipCode: "",
-      communityImage: file || ''
-
+      communityImage: '', // Use an empty string initially
     },
     validationSchema,
     onSubmit: async (values) => {
       values.communityImage=file
-      console.log(values)
-      // Remove setting the user here, as it's already set in initialValues
+      console.log(values);
       try {
-        await axios.post(`${server}/community/create-community`, values ,{
+        setLoading(true);
+        await axios.post(`${server}/community/create-community`, values, {
           withCredentials: true,
           headers: {
-              'Content-Type': 'multipart/form-data', // Set the content type for file upload
-          }
-      });
-        toast.success('Coummunity created successfully');
+            'Content-Type': 'application/json',
+          },
+        });
+        toast.success('Community created successfully');
+        setFile(null); // Reset file state after successful submission
+        formik.resetForm(); // Reset formik state
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          toast.error(error.response.data.error);
+          toast.error(error);
         } else {
-          toast.error('Failed to save Coummunity. Please try again later.');
+          toast.error('Failed to save Community. Please try again later.');
         }
+      } finally {
+        setLoading(false);
       }
     },
   });
-
   return (
     <div className="w-full">
       <h3 className="text-white font-medium text-xl">Add Community</h3>
@@ -143,13 +167,13 @@ const AddCommunityForm = () => {
           </div>
 
           {/* Add more form fields here for other properties */}
-
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-3 mx-2 float-right py-2 rounded hover:bg-blue-600"
-          >
-            Save
-          </button>
+          {loading ? "Looding...." :
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-3 mx-2 float-right py-2 rounded hover:bg-blue-600"
+            >
+              Save
+            </button>}
         </form>
       </div>
     </div>

@@ -14,10 +14,14 @@ app.use(express.json());
 // app.use(cookieParser());
 
 app.use(
-  cors({
-    origin: ["https://communities-snowy.vercel.app", "http://localhost:3000"],
+  cors(
+    {
+    // origin:  "http://localhost:3000",
+    origin: "https://communities-snowy.vercel.app",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  })
+      credentials: true,
+  }
+  )
 );
 
 // const corsOptions = {
@@ -27,7 +31,7 @@ app.use(
 // };
 // app.use(cors(corsOptions));
 
-app.use("/", express.static(__dirname + '/uploads'));
+// app.use("/", express.static(__dirname + '/uploads'));
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
 })

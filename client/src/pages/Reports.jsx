@@ -32,15 +32,17 @@ const Reports = () => {
         }
     };
     const fetchReport = async (userID) => {
+        console.log(userID)
         try {
             const response = await axios.get(`${server}/report/getReport/${userID}`);
             setReport(response.data);
+            console.log(response)
         } catch (error) {
             console.error(error);
             toast.error('Error fetching user');
         }
     };
-
+console.log(report)
     const changeStatus = (id) => {
         setPopup(true)
         setEditID(id);
@@ -104,9 +106,9 @@ const Reports = () => {
 
                                 {filteredReports.map((report) => (
                                     <tr key={report._id} className='text-sm font-normal text-white py-3 cursor-pointer' >
-                                        <td onClick={() => fetchReport(report._id)}>{report.reportTitle}</td>
-                                        <td onClick={() => fetchReport(report._id)}>{report.user.username}</td>
-                                        <td onClick={() => fetchReport(report._id)} className="  overflow-hidden">{report.reportDiscription.substring(0, 20) + '...'}</td>
+                                        <td onClick={() => fetchReport(report._id)}>{report?.reportTitle}</td>
+                                        <td onClick={() => fetchReport(report._id)}>{report.user?.username}</td>
+                                        <td onClick={() => fetchReport(report._id)} className="  overflow-hidden">{report?.reportDiscription.substring(0, 20) + '...'}</td>
                                         <td className={`px-2 py-2 rounded-lg ${report.status === 'new' ? 'text-blue-500' : (report.status === 'resolved' ? 'text-green-500' : 'text-red-500')} `}>
                                             {report.status}
                                         </td>

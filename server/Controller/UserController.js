@@ -13,18 +13,13 @@ const { upload } = require('../multer');
 
 
 // API for creating users
-router.post('/create-user', upload.single('profileImage'), async (req, res, next) => {
+router.post('/create-user', async (req, res, next) => {
   try {
-    const { username, email, phoneNumber, address, password, gender ,communities} = req.body;
+    const { username, email, phoneNumber, address, password, gender, communities, profileImage } = req.body;
 
     const userEmail = await User.findOne({ email });
     if (userEmail) {
       return res.status(400).json({ message: 'User already exists' });
-    }
-    let fileUrl = ''; // Initialize an empty string for the profile image URL
-
-    if (req.file) {
-      fileUrl = req.file.filename;
     }
     const user = new User({
       username,
@@ -34,7 +29,7 @@ router.post('/create-user', upload.single('profileImage'), async (req, res, next
       gender,
       password,
       communities,
-      profileImage:fileUrl
+      profileImage
     });
 
     await user.save();

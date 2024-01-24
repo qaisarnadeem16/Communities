@@ -13,35 +13,20 @@ const { upload } = require('../multer');
 
 
 // API for creating users
-router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { name: 'image2', maxCount: 1 }, { name: 'image3', maxCount: 1 }]), async (req, res, next) => {
+router.post('/create-report', async (req, res, next) => {
     try {
-      const { reportTitle, user, reportDiscription ,community} = req.body;
+      const { reportTitle, user, reportDiscription ,community , image1 , image2 ,image3} = req.body;
       
-      let image1Url = '';
-      let image2Url = '';
-      let image3Url = '';
-  // console.log(req.files)
-      // Check if corresponding files exist in req.files and set the URLs if available
-      if (req.files['image1'] && req.files['image1'][0]) {
-        image1Url = req.files['image1'][0].filename;
-      }
-  
-      if (req.files['image2'] && req.files['image2'][0]) {
-        image2Url = req.files['image2'][0].filename;
-      }
-  
-      if (req.files['image3'] && req.files['image3'][0]) {
-        image3Url = req.files['image3'][0].filename;
-      }
+    
 
       const report = new Report({
         reportTitle,
         user, 
         reportDiscription,
         community,
-        image1: image1Url,
-        image2: image2Url,
-        image3: image3Url,
+        image1,
+        image2,
+        image3
       });
   
       // Save the report data to the database
@@ -73,7 +58,7 @@ router.post('/create-report', upload.fields([{ name: 'image1', maxCount: 1 }, { 
       const { id } = req.params;
       const report = await Report.findById(id).populate('user');
   
-      res.status(200).json({ report });
+      res.status(200).json({ success: true, report });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import profile from '../../Assets/download (1).png';
 import { IoMdMail } from 'react-icons/io';
 import { AiFillPhone } from 'react-icons/ai';
-import { backend_url } from '../../server';
 
 const ProfileCard = ({ user }) => {
     // const [user, setUser] = useState(null);
@@ -13,7 +12,7 @@ const ProfileCard = ({ user }) => {
       <div className="w-full">
         {/* User */}
         <div className="flex flex-col items-center gap-4 justify-center py-10 border-b border-gray-200">
-          <img  src={user.user.profileImage ? `${backend_url}${user.user.profileImage}` : profile} alt="" className="w-[70px] h-[70px] rounded-full" />
+          <img  src={user.user.profileImage ? `${user.user.profileImage}` : profile} alt="" className="w-[70px] h-[70px] rounded-full" />
           <h1 className="text-lg font-medium text-white">{user.user?.username}</h1>
           <h1 className="text-md font-normal text-white">{user.user?.email}</h1>
         </div>

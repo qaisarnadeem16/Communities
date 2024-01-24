@@ -6,14 +6,35 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import { server } from '../server'
 import { Link } from 'react-router-dom'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../config/firebaseConfig';
 
 
 const SignupUserForm = () => {
     // const Navigate = useNavigate()
     const [file, setFile] = useState(null)
-    const handleFile = (e) => {
-        setFile(e.target.files[0])
-    }
+    const [loading, setLoading] = useState(false)
+
+    const handleFile = async (e) => {
+
+        const file = e.target.files[0];
+        console.log('Selected file:', file);
+        if (file) {
+            try {
+                setLoading(true);
+                const storageRef = ref(storage, `userPrfile/${file.name}`);
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+                toast.success(' Profile successfully uploaded')
+                setFile(downloadURL);
+            } catch (error) {
+                console.error('Error uploading file:', error.message);
+                toast.error('Error uploading file: ' + error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
     const initialValues = {
         username: '',
         email: '',
@@ -40,8 +61,8 @@ const SignupUserForm = () => {
             await axios.post(`${server}/user/create-user`, values, {
                 withCredentials: true,
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Set the content type for file upload
-                }
+                    'Content-Type': 'application/json',
+                },
             });
             toast.success('Created Account successful');
 

@@ -3,7 +3,7 @@ import DashBoard from './Admin/DashBoard'
 import ProfileCard from '../components/Layout/ProfileCard'
 import profile from '../Assets/download (1).png'
 import axios from 'axios'
-import { backend_url, server } from '../server'
+import {  server } from '../server'
 import { toast } from 'react-toastify'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import SuspendUser from '../components/SuspendUser'
@@ -53,6 +53,7 @@ const Users = () => {
 
             // Show a success message
             toast.success('User deleted successfully');
+            fetchUsers()
         } catch (error) {
             console.error(error);
             toast.error('Error deleting Community');
@@ -87,7 +88,7 @@ const Users = () => {
                                         <td className='' onClick={() => fetchUser(user._id)}>
                                             <div className="flex gap-3 items-center">
                                                 <img
-                                                    src={user.profileImage ? `${backend_url}${user.profileImage}` : profile}
+                                                    src={user.profileImage ? `${user.profileImage}` : profile}
                                                     alt="profile"
                                                     className="rounded-full w-[40px] h-[40px]"
                                                 />
