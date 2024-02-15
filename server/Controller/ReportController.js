@@ -78,35 +78,37 @@ router.post('/create-report', async (req, res, next) => {
   });
 
 
-  router.post('/addFeedback/:reportId', async (req, res, next) => {
-    try {
-      const { reportId } = req.params;
-      const { userId, feedback } = req.body;
-  
-      // Find the report by its ID
-      
-      const report = await Report.findById(reportId);
-  
-      if (!report) {
-        return res.status(404).json({ message: 'Report not found' });
-      }
-      // Create a new feedback object
-      const newFeedback = {
-        userId,
-        feedback,
-      };
-  
-      // Add the feedback to the report's feedback array
-      report.feedback.push(newFeedback);
-  
-      // Save the updated report
-      await report.save();
-  
-      res.status(201).json({ message: 'Feedback added successfully', feedback: newFeedback });
-    } catch (error) {
-      return next(error);
+router.post('/addFeedback/:reportId', async (req, res, next) => {
+  try {
+    const { reportId } = req.params;
+    const { userId, feedback } = req.body;
+
+    // Find the report by its ID
+    const report = await Report.findById(reportId);
+    console.log(reportId);
+    if (!report) {
+      return res.status(404).json({ message: 'Report not found' });
     }
-  });
+
+    // Create a new feedback object
+    const newFeedback = {
+      userId,
+      feedback,
+    };
+console.log(newFeedback)
+    // Add the feedback to the report's feedback array
+    report.feedback.push(newFeedback);
+
+    // Save the updated report
+    await report.save();
+
+    res.status(201).json({ message: 'Feedback added successfully', feedback: newFeedback });
+  } catch (error) {
+    console.error('Error adding feedback:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 // Delete a community by ID
 router.delete('/deleteReport/:reportId', async (req, res, next) => {
