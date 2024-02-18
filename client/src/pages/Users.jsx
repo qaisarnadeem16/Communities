@@ -39,7 +39,7 @@ const Users = () => {
             toast.error('Error fetching user');
         }
     };
-    console.log(user);
+    // console.log(user);
 
     const changeStatus = (id) => {
         setPopup(true)
@@ -63,12 +63,7 @@ const Users = () => {
         <DashBoard>
             <div className="w-full text-white flex gap-2 flex-wrap">
                 <div className="md:w-[75%] w-full">
-                    <div className="px-5 text-xl font-semibold pb-10">Users</div>
-
-
-
-
-                    {/* //table */}
+                    <div className="px-5 text-xl font-semibold pb-10">Users</div>   {/* //table */}
                     <div className="py-5 overflow-x-auto">
                         <table className="w-full  ">
                             <thead className="text-[#ffffff]">
@@ -83,7 +78,7 @@ const Users = () => {
                                 </tr>
                             </thead>
                             <tbody className="text-center">
-                                {users.map((user) => (
+                                {users && users.map((user) => (
                                     <tr key={user._id} className='text-sm font-normal text-white py-3'>
                                         <td className='' onClick={() => fetchUser(user._id)}>
                                             <div className="flex gap-3 items-center">
@@ -118,24 +113,7 @@ const Users = () => {
                                         </td>
 
                                     </tr>
-                                ))}
-                                {/* 
-                                <tr className='text-sm font-normal text-white py-3'>
-                                    <td>
-                                        <div className="flex gap-3 items-center">
-                                            <img src={profile} alt="" className="rounded-full w-[40px] h-[40px]" />
-                                            John Deo
-                                        </div>
-                                    </td>
-                                    <td>johndeo@gmail.com</td>
-                                    <td>+9238883888</td>
-                                    <td className='px-2 py-2 rounded-lg text-green-500'>male</td>
-                                    <td className='py-2'> <div className=" py-2 w-24 rounded-lg bg-red-500 cursor-pointer">Suspend</div></td>
-
-                                </tr> */}
-
-
-                            </tbody>
+                                ))} </tbody>
                         </table>
                     </div>
                 </div>
