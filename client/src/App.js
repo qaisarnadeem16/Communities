@@ -5,16 +5,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { CookiesProvider } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import AdminLogin from './pages/Admin/AdminLogin';
 import Store from './Redux/store'
-// import { useEffect } from 'react';
 import AdminProtectedRoute from './Routes/AdminProtectedRoute'
 import AdminLogin from './pages/Admin/AdminLogin';
 import { useEffect } from 'react';
 import { loadAdmin } from './Redux/Action/Admin';
 import SignupUserForm from './components/SignupUserForm';
 import ReportAddForm from './components/ReportAddForm';
-// import DashBoard from './pages/Admin/DashBoard';
 
 
 
@@ -35,20 +32,20 @@ function App() {
 
             <Route path="/dashboard" element={
               <AdminProtectedRoute>
-              <Reports />
-               </AdminProtectedRoute>
+                <Reports />
+              </AdminProtectedRoute>
             } />
 
             <Route path="/dashboard/users" element={
               <AdminProtectedRoute>
-              <Users />
+                <Users />
               </AdminProtectedRoute>
             } />
 
 
             <Route path="/dashboard/Communities" element={
               <AdminProtectedRoute>
-              <Communities />
+                <Communities />
               </AdminProtectedRoute>
             } />
 

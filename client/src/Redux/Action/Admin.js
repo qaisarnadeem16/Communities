@@ -15,7 +15,7 @@ export const loadAdmin = () => async (dispatch, state) => {
         })
         dispatch({
             type: "LoadAdminSuccess",
-            payload: data.admin
+            payload: data?.admin
         })
     } catch (error) {
         dispatch({

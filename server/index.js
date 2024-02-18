@@ -41,7 +41,7 @@ const admin = require('./Controller/AdminController')
 const user = require('./Controller/UserController')
 const report = require('./Controller/ReportController')
 const community = require('./Controller/CommunityController')
-const ErrorHandler = require('./Utils/ErrorHandler');
+// const ErrorHandler = require('./Utils/ErrorHandler');
 
 
 app.use("/api/v2/admin", admin)
@@ -50,4 +50,4 @@ app.use("/api/v2/community", community)
 app.use("/api/v2/report", report)
 
 // it's for ErrorHandling
-app.use(ErrorHandler);
+// app.use(ErrorHandler);
